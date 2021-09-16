@@ -68,7 +68,7 @@ exports.getOne = (Model, popOptions) => {
   });
 };
 
-exports.getAll = Model => {
+exports.getAll = Model => { // this can be converted later to fetch all users for admin or whatever reasons
   return catchAsync(async (req, res) => {
     //to allow for nested GET reviews on tour(hack)
     let filter = {};

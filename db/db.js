@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
-  const dbEnv =
+  const dbEnv = // this will help separate production enviroments, not to mess with production data
     process.env.NODE_ENV !== `production`
       ? process.env.MONGO_DB_DEV
       : process.env.MONGO_DB_PROD;

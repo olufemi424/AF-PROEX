@@ -11,19 +11,20 @@ const signToken = id => {
   });
 };
 
-// create send token to user, and the user will use this token to perform actions, this token contains user details
+// create send token to user, and the user will use this token to perform actions, this token contains user details (userID)
+// this is very useful, cos when we have many tokens needed for different services, we can always attach the token here
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
-    expires: new Date(
+    'expires': new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true
+    'httpOnly': true
   };
 
   //only want cookie in production
   if (process.env.NODE_ENV === 'production') {
-    // cookieOptions.secure = true; // TODO: enable this for production
+    cookieOptions['secure'] = true; // TODO: enable this for production
   }
 
   /**
@@ -127,7 +128,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   //grant access to protected route
   req.user = currentUser;
-  res.locals.user = currentUser; //user info should be avaiable as an object
+  res.locals.user = currentUser; //user data should be avaiable as an object in the template
   next();
 });
 
@@ -156,8 +157,8 @@ exports.signup = catchAsync(async (req, res, next) => {
  */
 exports.logout = (req, res) => {
   res.cookie('jwt', 'loggedout', {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true
+    'expires': new Date(Date.now() + 10 * 1000),
+    'httpOnly': true
   });
 
   res.status(200).json({ status: 'success' });

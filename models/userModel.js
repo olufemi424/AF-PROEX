@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a password'],
     minlength: 8,
-    select: false
+    select: false,
+    message: 'Please provide a valid password!'
   },
   passwordConfirm: {
     type: String,
@@ -63,7 +64,7 @@ userSchema.pre('save', async function(next) {
 });
 
 userSchema.pre('save', function(next) {
-  if (!this.isModified('password') || this.isNew) return next();
+  if (!this.isModified('password') || this.isNew) return next(); // if password is not modified, go to next
 
   this.passwordChangedAt = Date.now() - 1000; //edge case for hashing taking too long
   next();

@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Helmet helps secure Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
 app.use(helmet());
 
-// development loggin
+// development logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev')); // logger middleware
 }
